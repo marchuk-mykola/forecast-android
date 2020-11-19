@@ -31,6 +31,14 @@ fun View.gone() {
         visibility = View.GONE
 }
 
+fun RecyclerView.addDividerDecorator24dp() {
+    this.addItemDecoration(
+        DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(context, R.drawable.divider_24dp)!!)
+        }
+    )
+}
+
 fun RecyclerView.addDividerDecorator16dp() {
     this.addItemDecoration(
         DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {

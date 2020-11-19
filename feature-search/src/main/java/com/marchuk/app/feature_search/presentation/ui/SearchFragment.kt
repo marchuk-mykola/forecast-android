@@ -14,7 +14,6 @@ import com.marchuk.app.core.feature_search.R
 import com.marchuk.app.core.feature_search.databinding.FragmentSearchBinding
 import com.marchuk.app.core.utils.addDividerDecorator16dp
 import com.marchuk.app.core.utils.gone
-import com.marchuk.app.core.utils.hideKeyboard
 import com.marchuk.app.core.utils.mvi.MviFragment
 import com.marchuk.app.core.utils.recycler.DelegateAdapterItem
 import com.marchuk.app.core.utils.visible
@@ -73,7 +72,8 @@ class SearchFragment :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(STATE_KEY, viewModel.viewStates().value)
+        if (::viewModel.isInitialized)
+            outState.putParcelable(STATE_KEY, viewModel.viewStates().value)
     }
 
     override fun renderViewEffect(viewEffect: SearchViewEffect) {
@@ -89,11 +89,12 @@ class SearchFragment :
 
         delegationAdapter = ListDelegationAdapter(
             SearchRecyclerAdapters.foundedLocationDelegateAdapter { location ->
-                requireContext().hideKeyboard()
+                binding.searchView.clearFocus()
                 processAction(SearchViewAction.OnLocationClicked(location))
             },
             SearchRecyclerAdapters.rememberedLocationDelegateAdapter(
                 onRememberedLocationClick = { location ->
+                    binding.searchView.clearFocus()
                     processAction(SearchViewAction.OnLocationClicked(location))
                 },
                 onDeleteLocationClick = { location ->
@@ -110,8 +111,9 @@ class SearchFragment :
             }
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
+                    searchView.clearFocus()
                     processAction(SearchViewAction.OnInputChanged(query ?: String()))
-                    return true
+                    return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {

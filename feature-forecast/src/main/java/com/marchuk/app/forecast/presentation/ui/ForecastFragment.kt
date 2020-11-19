@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.updatePadding
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.marchuk.app.core.forecast.R
 import com.marchuk.app.core.forecast.databinding.FragmentForecastBinding
-import com.marchuk.app.core.utils.addDividerDecorator16dp
+import com.marchuk.app.core.utils.addDividerDecorator24dp
 import com.marchuk.app.core.utils.mvi.MviFragment
 import com.marchuk.app.core.utils.recycler.DelegateAdapterItem
 import com.marchuk.app.domain.models.Location
@@ -43,7 +42,8 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(STATE_KEY, viewModel.viewStates().value)
+        if (::viewModel.isInitialized)
+            outState.putParcelable(STATE_KEY, viewModel.viewStates().value)
     }
 
     override fun renderViewState(viewState: ForecastViewState) {
@@ -53,6 +53,15 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
             }
             ForecastState.Loaded -> {
                 binding.swipeRefreshLayout.isRefreshing = false
+                viewState.forecastItem?.currentForecast?.let {
+                    binding.root.background =
+                        if (it.isDay) {
+                            ContextCompat.getDrawable(requireContext(), R.drawable.day_gradient)
+                        } else {
+                            ContextCompat.getDrawable(requireContext(), R.drawable.night_gradient)
+                        }
+                }
+
                 delegationAdapter.items = viewState.recyclerList
                 delegationAdapter.notifyDataSetChanged()
             }
@@ -74,11 +83,6 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
     override fun renderViewEffect(viewEffect: ForecastViewEvent) = Unit
 
     override fun setupUi(savedInstanceState: Bundle?) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.recycler) { view, insets ->
-            view.updatePadding(top = insets.systemWindowInsetTop, bottom = insets.systemWindowInsetBottom)
-            insets
-        }
-
         viewModel = getViewModel {
             parametersOf(
                 savedInstanceState?.getParcelable<ForecastViewState>(STATE_KEY),
@@ -95,7 +99,7 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
             with(recycler) {
                 adapter = delegationAdapter
                 layoutManager = LinearLayoutManager(requireContext())
-                addDividerDecorator16dp()
+                addDividerDecorator24dp()
             }
             swipeRefreshLayout.setOnRefreshListener {
                 processAction(ForecastViewAction.ReloadData)
