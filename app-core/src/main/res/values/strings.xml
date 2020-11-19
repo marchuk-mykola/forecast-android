@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Empik Forecast</string>
+    <string name="search_hint">Search</string>
+
+    <string name="find_locations_hint">Find a location to see the current weather</string>
+    <string name="no_locations_found">No locations found for your request</string>
+    <string name="error_network">An error occured, check your internet connection and try again</string>
+    <string name="unknown_error_occured">Error occured</string>
+</resources>

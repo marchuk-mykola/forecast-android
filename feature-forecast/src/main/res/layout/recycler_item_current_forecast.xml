@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/currentDayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/base_padding"
+        android:layout_marginEnd="24dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mon, July 6" />
+
+    <TextView
+        android:id="@+id/cityNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentDayTextView"
+        tools:text="Warsaw" />
+
+    <TextView
+        android:id="@+id/currentTemperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:textColor="@android:color/white"
+        android:textSize="60sp"
+        app:layout_constraintStart_toStartOf="@+id/cityNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/cityNameTextView"
+        tools:text="28°C" />
+
+    <TextView
+        android:id="@+id/maxTemperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_arrow_top"
+        app:layout_constraintStart_toStartOf="@+id/currentTemperatureTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentTemperatureTextView"
+        tools:text="31°" />
+
+    <TextView
+        android:id="@+id/minTemperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_padding"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_arrow_down"
+        app:layout_constraintStart_toEndOf="@+id/maxTemperatureTextView"
+        app:layout_constraintTop_toTopOf="@+id/maxTemperatureTextView"
+        tools:text="13°" />
+
+    <TextView
+        android:id="@+id/conditionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/currentTemperatureTextView"
+        app:layout_constraintTop_toBottomOf="@+id/maxTemperatureTextView"
+        tools:text="Sunny" />
+
+    <TextView
+        android:id="@+id/feelsLikeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="@dimen/medium_padding"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/conditionTextView"
+        app:layout_constraintTop_toBottomOf="@+id/conditionTextView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Feels like 28°" />
+
+    <ImageView
+        android:id="@+id/conditionCircleBackground"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/medium_padding"
+        android:alpha="0.5"
+        android:background="@drawable/condition_background"
+        app:layout_constraintBottom_toBottomOf="@+id/currentTemperatureTextView"
+        app:layout_constraintStart_toEndOf="@+id/currentTemperatureTextView"
+        app:layout_constraintTop_toTopOf="@+id/currentTemperatureTextView" />
+
+    <ImageView
+        android:id="@+id/conditionIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/conditionCircleBackground"
+        app:layout_constraintEnd_toEndOf="@+id/conditionCircleBackground"
+        app:layout_constraintStart_toStartOf="@+id/conditionCircleBackground"
+        app:layout_constraintTop_toTopOf="@+id/conditionCircleBackground" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
