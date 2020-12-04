@@ -1,4 +1,4 @@
-package com.marchuk.app.forecast.presentation
+package com.marchuk.app.forecast.presentation.ui
 
 import android.os.Parcelable
 import com.marchuk.app.core.utils.recycler.DelegateAdapterItem
@@ -14,7 +14,9 @@ internal data class ForecastViewState(
     val recyclerList: List<DelegateAdapterItem>? = null
 ) : Parcelable
 
-internal sealed class ForecastViewEvent
+internal sealed class ForecastViewEffect {
+   object ShowToast : ForecastViewEffect()
+}
 
 internal sealed class ForecastViewAction {
     object ReloadData : ForecastViewAction()

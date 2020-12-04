@@ -4,6 +4,8 @@ import com.marchuk.app.domain.models.Location
 import com.marchuk.app.forecast.presentation.mappers.DayForecastToDailyForecastRecyclerModelMapper
 import com.marchuk.app.forecast.presentation.mappers.ForecastItemToCurrentForecastRecyclerModelMapper
 import com.marchuk.app.forecast.presentation.mappers.HourlyForecastToRecyclerModelMapper
+import com.marchuk.app.forecast.presentation.ui.ForecastViewModel
+import com.marchuk.app.forecast.presentation.ui.ForecastViewState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

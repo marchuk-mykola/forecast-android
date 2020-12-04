@@ -1,4 +1,4 @@
-package com.marchuk.app.forecast.presentation
+package com.marchuk.app.forecast.presentation.ui
 
 import androidx.lifecycle.viewModelScope
 import com.marchuk.app.core.utils.mvi.MviViewModel
@@ -23,7 +23,7 @@ internal class ForecastViewModel(
     private val dayForecastToDailyForecastRecyclerModelMapper: DayForecastToDailyForecastRecyclerModelMapper,
     private val forecastItemToCurrentForecastRecyclerModelMapper: ForecastItemToCurrentForecastRecyclerModelMapper,
     private val hourlyForecastToRecyclerModelMapper: HourlyForecastToRecyclerModelMapper
-) : MviViewModel<ForecastViewState, ForecastViewEvent, ForecastViewAction>(
+) : MviViewModel<ForecastViewState, ForecastViewEffect, ForecastViewAction>(
     initialState = initialState ?: ForecastViewState(state = ForecastState.Loading, location = location)
 ) {
 
@@ -40,7 +40,7 @@ internal class ForecastViewModel(
 
     private fun loadForecast() {
         viewState = viewState.copy(state = ForecastState.Loading)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val response = getForecastByCoordinatesUseCase(
                 lat = viewState.location.lat,
                 lon = viewState.location.lon
@@ -58,6 +58,7 @@ internal class ForecastViewModel(
                     when (response.exception) {
                         is IOException -> {
                             viewState = viewState.copy(state = ForecastState.Error.NetworkError)
+                            viewEffect = ForecastViewEffect.ShowToast
                         }
                     }
                 }
@@ -79,6 +80,5 @@ internal class ForecastViewModel(
             DailyRecyclerForecastsHolder(dailyForecasts)
         )
     }
-
 
 }

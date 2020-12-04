@@ -129,10 +129,12 @@ object Libs {
         private const val androidxTestRunnerVersion = "1.3.0-alpha03"
         private const val coreTestingVersion = "2.1.0"
         private const val coroutinesTestVersion = "1.4.1"
+        private const val fragmentVersion = "1.2.5"
 
         const val androidxTestRunner = "androidx.test:runner:$androidxTestRunnerVersion"
         const val androidxTestRules = "androidx.test:rules:$androidxTestRunnerVersion"
         const val androidxTestCore = "androidx.arch.core:core-testing:$coreTestingVersion"
+        const val androidxTestFragment = "androidx.fragment:fragment-testing:$fragmentVersion"
         const val kotlinCoroutinesText = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"
 
         const val truth = "com.google.truth:truth:$truthVersion"

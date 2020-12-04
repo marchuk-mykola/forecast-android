@@ -14,12 +14,11 @@ import com.marchuk.app.core.utils.addDividerDecorator24dp
 import com.marchuk.app.core.utils.mvi.MviFragment
 import com.marchuk.app.core.utils.recycler.DelegateAdapterItem
 import com.marchuk.app.domain.models.Location
-import com.marchuk.app.forecast.presentation.*
 import com.marchuk.app.forecast.presentation.ui.recycler.ForecastRecyclerDelegateAdapters
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
-internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastViewState, ForecastViewEvent,
+internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastViewState, ForecastViewEffect,
       ForecastViewAction, ForecastViewModel>(R.layout.fragment_forecast) {
 
     companion object {
@@ -67,20 +66,17 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
             }
             ForecastState.Error.NetworkError -> {
                 binding.swipeRefreshLayout.isRefreshing = false
-                showToast()
             }
             ForecastState.Error.UnknownError -> {
                 binding.swipeRefreshLayout.isRefreshing = false
-                showToast()
             }
         }
     }
 
-    private fun showToast() {
-        Toast.makeText(requireContext(), R.string.unknown_error_occured, Toast.LENGTH_LONG).show()
-    }
-
-    override fun renderViewEffect(viewEffect: ForecastViewEvent) = Unit
+    override fun renderViewEffect(viewEffect: ForecastViewEffect) =
+        when (viewEffect) {
+            ForecastViewEffect.ShowToast -> showToast()
+        }
 
     override fun setupUi(savedInstanceState: Bundle?) {
         viewModel = getViewModel {
@@ -95,6 +91,7 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
             ForecastRecyclerDelegateAdapters.hourlyForecasts(),
             ForecastRecyclerDelegateAdapters.dailyForecasts()
         )
+
         with(binding) {
             with(recycler) {
                 adapter = delegationAdapter
@@ -105,8 +102,10 @@ internal class ForecastFragment : MviFragment<FragmentForecastBinding, ForecastV
                 processAction(ForecastViewAction.ReloadData)
             }
         }
+    }
 
-
+    private fun showToast() {
+        Toast.makeText(requireContext(), R.string.unknown_error_occured, Toast.LENGTH_LONG).show()
     }
 
 }

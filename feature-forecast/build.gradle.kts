@@ -98,4 +98,17 @@ dependencies {
     implementation(Libs.Koin.koinViewModel)
     implementation(Libs.Koin.koinExtensions)
 
+    testImplementation(Libs.test.junit)
+    testImplementation(Libs.test.junitExt)
+    testImplementation(Libs.test.espresso)
+    testImplementation(Libs.test.robolectric)
+    testImplementation(Libs.test.mockK)
+    testImplementation(Libs.test.truth)
+    testImplementation(Libs.test.truthExt)
+    testImplementation(Libs.test.androidxTestRules)
+    testImplementation(Libs.test.androidxTestRunner)
+    testImplementation(Libs.test.androidxTestCore)
+    testImplementation(Libs.test.androidxTestFragment)
+    testImplementation(Libs.test.kotlinCoroutinesText)
+
 }

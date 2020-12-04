@@ -1,9 +1,9 @@
 package com.marchuk.app.feature_search.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.marchuk.app.domain.EmptyInputException
 import com.marchuk.app.core.utils.mvi.MviViewModel
 import com.marchuk.app.core.utils.network.Result
+import com.marchuk.app.domain.EmptyInputException
 import com.marchuk.app.domain.models.Location
 import com.marchuk.app.domain.useCase.DeleteLastSearchedLocationUseCase
 import com.marchuk.app.domain.useCase.GetLastSearchedLocationsUseCase
@@ -48,8 +48,7 @@ class SearchViewModel(
 
     private fun startObservingLastSearchedLocations() {
         viewModelScope.launch(Dispatchers.IO) {
-            val flow = getLastSearchedLocationsUseCase()
-            flow.collect { list ->
+            getLastSearchedLocationsUseCase().collect { list ->
                 viewState = viewState.copy(
                     rememberedLocations = list.reversed().map { location -> RememberedLocation(location) })
             }
@@ -58,7 +57,7 @@ class SearchViewModel(
 
     private fun searchLocations(input: String) {
         viewState = viewState.copy(state = SearchState.Searching, input = input)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (val result = searchLocationsUseCase(input)) {
                 is Result.Success -> {
                     viewState = when {
@@ -68,9 +67,7 @@ class SearchViewModel(
                         else -> {
                             viewState.copy(
                                 state = SearchState.Success,
-                                foundedLocations = result.body.map { location ->
-                                    FoundedLocation(location)
-                                }
+                                foundedLocations = result.body.map { location -> FoundedLocation(location) }
                             )
                         }
                     }

@@ -4,11 +4,8 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.marchuk.app.core.utils.SingleLiveEvent
 import com.marchuk.app.core.utils.TAG
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -50,10 +47,8 @@ abstract class MviViewModel<STATE, EFFECT, ACTION>(initialState: STATE) : ViewMo
         set(value) {
             if (isLoggingEnabled)
                 Timber.tag(TAG).d("setting viewState : $value")
-            viewModelScope.launch(Dispatchers.Main) {
-                _viewState = value
-                _viewStates.value = value
-            }
+            _viewState = value
+            _viewStates.value = value
         }
 
     private val _viewEffects: SingleLiveEvent<EFFECT> = SingleLiveEvent()
@@ -66,10 +61,8 @@ abstract class MviViewModel<STATE, EFFECT, ACTION>(initialState: STATE) : ViewMo
         set(value) {
             if (isLoggingEnabled)
                 Timber.tag(TAG).d("setting viewEffect : $value")
-            viewModelScope.launch(Dispatchers.Main) {
-                _viewEffect = value
-                _viewEffects.value = value
-            }
+            _viewEffect = value
+            _viewEffects.value = value
         }
 
     @CallSuper
