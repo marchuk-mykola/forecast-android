@@ -1,4 +1,4 @@
-## Empik zadanie testowe
+## Zadanie testowe
 
 ### Features
 - [The Global Weather API](https://www.theglobalweather.com/docs/)
