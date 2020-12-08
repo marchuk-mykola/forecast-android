@@ -58,7 +58,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun firstTest() {
+    fun `when invoke useCase input validation fails`() {
         mainCoroutineRule.runBlockingTest {
             val viewStateObserver: Observer<SearchViewState> = mockk(relaxUnitFun = true)
             viewModel.viewStates().observeForever(viewStateObserver)
@@ -74,7 +74,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `second test`() {
+    fun `when invoke useCase returns api error state`() {
         mainCoroutineRule.runBlockingTest {
             val viewStateObserver: Observer<SearchViewState> = mockk(relaxUnitFun = true)
             viewModel.viewStates().observeForever(viewStateObserver)

@@ -41,7 +41,6 @@ class SearchLocationDaoTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-
         database = ForecastDatabase.buildDatabase(ApplicationProvider.getApplicationContext())
         searchedLocationDao = database.searchedCityDao()
     }
