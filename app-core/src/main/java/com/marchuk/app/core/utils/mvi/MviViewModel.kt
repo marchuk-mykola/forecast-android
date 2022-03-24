@@ -27,11 +27,6 @@ import timber.log.Timber
  * @property process(viewEvent: EVENT) Process ViewEvents (viewEvent) passed by Activity/Fragment/View
  *                                     and update ViewState and ViewEffect accordingly.
  *
- * @see <a href="https://medium.com/@rohitss/best-architecture-for-android-mvi-livedata-viewmodel-71a3a5ac7ee3">Article which explains this Custom MVI architecture with Architecture Components.</a>
- * @author Rohit Surwase
- * @author https://github.com/RohitSurwase
- * @version 1.0
- * @since 1.0
  */
 abstract class MviViewModel<STATE, EFFECT, ACTION>(initialState: STATE) : ViewModel(), ViewModelContract<ACTION> {
 
